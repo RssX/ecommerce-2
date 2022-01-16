@@ -9,6 +9,9 @@ import React, { Component } from 'react'
 import { auth, createUserProfileDocument } from './firebase/firebase';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/userActions';
+import { selectCurrentUser } from './redux/user/userSelectors';
+import { createStructuredSelector } from 'reselect';
+import CheckoutPage from './pages/checkout/checkout';
 
 
 
@@ -48,14 +51,15 @@ class App extends Component {
         <Route path='/shop' element={<ShopPage/>}></Route>
         <Route path='/sign' element={this.props.currentUser ? <Navigate to='/'/> : <Sign/>} >
         </Route>
+        <Route path='/checkout' element={<CheckoutPage/>}></Route>
       </Routes>
     </div>
     )
   }
 };
 
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
 
 const mapDispatchToProps = (dispatch) => ({
